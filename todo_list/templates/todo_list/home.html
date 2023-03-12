@@ -1,0 +1,38 @@
+{% extends 'todo_list/base.html' %}
+
+{%block content%}
+    {% if messages %}
+        {% for message in messages %}
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+                <div class="alert alert-success" id="success-alert">
+                  <button type="button" class="close" data-dismiss="alert">x</button>
+                  <strong>{{message}} </strong>
+                </div>
+                
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        {% endfor %}
+
+{% endif %}
+
+{%if all_items %}
+    <table class="table table-bordered">
+    {% for things in all_items %}
+        {% if things.completed %}
+        <tr>
+            <td class="striker" ><center><strong>{{things.item}}</strong></center></td>
+            <td><center><a href="{% url 'uncross' things.id%}"><button type="radio" class="btn btn-success">Completed</button></a></center></td>
+            <td><center><a href="{% url 'delete' things.id%}"><button type="radio" class="btn btn-danger">Delete</button></a></center></td>
+        </tr>
+        {% else %}
+        <tr>
+            <td><center><strong>{{things.item}}</strong></center></td>
+            <td><center><a href="{% url 'cross_off' things.id%}"><button type="radio" class="btn btn-warning">Complete</button></a></center></td>
+            <td><center><a href="{% url 'delete' things.id%}"><button type="radio" class="btn btn-danger">Delete</button></a></center></td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+    </table>
+{% endif %}
+
+{% endblock %}
